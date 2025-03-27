@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 int main()
 {
     //Open files for reading and writing. Data 1 is 2021-22, 2 is 22-23, 3 is 23-24
@@ -15,6 +16,13 @@ int main()
     FILE *on = fopen("ondailyavg.txt", "w");
     FILE *cl = fopen("cldailyavg.txt", "w");
     FILE *combine = fopen("combinedailyavg.txt", "w");
+    FILE *sup8 = fopen("superior8.txt", "w");
+    FILE *mich8 = fopen("michigan8.txt", "w");
+    FILE *huron8 = fopen("huron8.txt", "w");
+    FILE *erie8 = fopen("erie8.txt", "w");
+    FILE *on8 = fopen("ontario8.txt", "w");
+    FILE *cl8 = fopen("stclair8.txt", "w");
+
     
     // Initialize variables for the row string, counting, average variables and arrays
     char row[100];
@@ -146,7 +154,7 @@ int main()
             printf("Lake Ontario:   ");
         }
         else if(i == 5){
-            printf("Lake St Claire: ");
+            printf("Lake St Clair:  ");
         }
         else if(i == 6){
             printf("GL Average:     ");
@@ -154,5 +162,50 @@ int main()
         printf("%10lf %13lf %17lf %12lf %18lf %11lf \n", avg21[i], avg22[i], avg221[i], avg23[i], avg231[i], avg24[i]);
     }
     
+    fclose(data1);
+    fclose(data2);
+    fclose(data3);
+    data3 = fopen("g2023_2024_ice.dat", "r");
+    data1 = fopen("g2021_2022_ice.dat", "r");
+    data2 = fopen("g2022_2023_ice.dat", "r");
+    count = 0;
+    for(int i = 0; i<=7; i++){
+        fgets(row, 100, data1);
+        fgets(row, 100, data2);
+        fgets(row, 100, data3);
+    }
 
+    while (!feof(data1) || !feof(data2) || !feof(data3)){
+        count++;
+        fprintf(sup8, "%i ", count);
+        fprintf(mich8, "%i ", count);
+        fprintf(huron8, "%i ", count);
+        fprintf(erie8, "%i ", count);
+        fprintf(on8, "%i ", count);
+        fprintf(cl8, "%i ", count);
+        fgets(row, 100, data1);
+        sscanf(row, "%i %lf %lf %lf %lf %lf %lf %lf %lf", &year, &day, &savg, &mavg, &havg, &eavg, &oavg, &clavg, &total);
+        fprintf(sup8, "%lf ", savg);
+        fprintf(mich8, "%lf ", mavg);
+        fprintf(huron8, "%lf ", havg);
+        fprintf(erie8, "%lf ", eavg);
+        fprintf(on8, "%lf ", oavg);
+        fprintf(cl8, "%lf ", clavg);
+        fgets(row, 100, data2);
+        sscanf(row, "%i %lf %lf %lf %lf %lf %lf %lf %lf", &year, &day, &savg, &mavg, &havg, &eavg, &oavg, &clavg, &total);
+        fprintf(sup8, "%lf ", savg);
+        fprintf(mich8, "%lf ", mavg);
+        fprintf(huron8, "%lf ", havg);
+        fprintf(erie8, "%lf ", eavg);
+        fprintf(on8, "%lf ", oavg);
+        fprintf(cl8, "%lf ", clavg);
+        fgets(row, 100, data3);
+        sscanf(row, "%i %lf %lf %lf %lf %lf %lf %lf %lf", &year, &day, &savg, &mavg, &havg, &eavg, &oavg, &clavg, &total);
+        fprintf(sup8, "%lf\n", savg);
+        fprintf(mich8, "%lf\n", mavg);
+        fprintf(huron8, "%lf\n", havg);
+        fprintf(erie8, "%lf\n", eavg);
+        fprintf(on8, "%lf\n", oavg);
+        fprintf(cl8, "%lf\n", clavg);
+    }
 }
