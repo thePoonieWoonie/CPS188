@@ -5,10 +5,14 @@
 
 int main()
 {
-    //Open files for reading and writing. Data 1 is 2021-22, 2 is 22-23, 3 is 23-24
+    //Open files for reading and writing
+
+    //Data files
     FILE *data3 = fopen("g2023_2024_ice.dat", "r");
     FILE *data1 = fopen("g2021_2022_ice.dat", "r");
     FILE *data2 = fopen("g2022_2023_ice.dat", "r");
+
+    //Files for question 5 and 6
     FILE *sup = fopen("supdailyavg.txt", "w");
     FILE *mich = fopen("michdailyavg.txt", "w");
     FILE *huron = fopen("hurondailyavg.txt", "w");
@@ -16,6 +20,8 @@ int main()
     FILE *on = fopen("ondailyavg.txt", "w");
     FILE *cl = fopen("cldailyavg.txt", "w");
     FILE *combine = fopen("combinedailyavg.txt", "w");
+
+    //Files for question 8
     FILE *sup8 = fopen("superior8.txt", "w");
     FILE *mich8 = fopen("michigan8.txt", "w");
     FILE *huron8 = fopen("huron8.txt", "w");
@@ -25,9 +31,17 @@ int main()
 
     
     // Initialize variables for the row string, counting, average variables and arrays
+
+    //Variable to store the entire row as a string
     char row[100];
+
+    //counting variables, used in loops and calculating averages
     int year, count = 0, count21 = 0, count22 = -1, count221 = 0, count23 = -1 , count231 = 0, count24 = -1;
+
+    //Reads the string and stores the numbers in these variables
     double day, savg, mavg, havg, eavg, oavg, clavg, total;
+
+    //Variables for question 7 (calculating table)
     double avg21[7], avg22[7], avg221[7], avg23[7], avg231[7], avg24[7];
 
     //Skips the first 7 lines of data
@@ -41,6 +55,7 @@ int main()
     while (!feof(data1)){
         fgets(row, 100, data1);
         sscanf(row, "%i %lf %lf %lf %lf %lf %lf %lf %lf", &year, &day, &savg, &mavg, &havg, &eavg, &oavg, &clavg, &total);
+        //Summation of 2021 and 2022 data for q6
         if (year == 2021){
             count21++;
             avg21[0] += savg;
@@ -67,6 +82,7 @@ int main()
     while (!feof(data2)){
         fgets(row, 100, data2);
         sscanf(row, "%i %lf %lf %lf %lf %lf %lf %lf %lf", &year, &day, &savg, &mavg, &havg, &eavg, &oavg, &clavg, &total);
+        //Summation of 2022 and 2023 data for q6
         if (year == 2022){
             count221++;
             avg221[0] += savg;
@@ -94,6 +110,7 @@ int main()
         count++;
         fgets(row, 100, data3);
         sscanf(row, "%i %lf %lf %lf %lf %lf %lf %lf %lf", &year, &day, &savg, &mavg, &havg, &eavg, &oavg, &clavg, &total);
+        //Printing data to a file, for question 5
         if (count != 153){
             fprintf(sup, "%i %lf\n", count, savg);
             fprintf(mich, "%i %lf\n", count, mavg);
@@ -103,6 +120,7 @@ int main()
             fprintf(cl, "%i %lf\n", count, clavg);
             fprintf(combine, "%i %lf %lf %lf %lf %lf %lf \n", count, savg, mavg, havg, eavg, oavg, clavg);
         }
+        //Summation of 2023 and 2024 data for q6
         if (year == 2023){
             count231++;
             avg231[0] += savg;
@@ -124,7 +142,8 @@ int main()
             avg24[6] += total;
         }
     }
-    //Turning from summation to average
+
+    //Turning from summation to average for 6
     for (int i = 0; i<= 6; i++){
         avg21[i] /= count21;
         avg22[i] /= count22;
@@ -135,7 +154,7 @@ int main()
         
     }
 
-    
+    //Printing the table (q6)
     printf("                        Data set 1                      Data set 2                      Data set 3\n");
     printf("                    2021        2022                2022        2023                2023        2024\n");
     for (int i = 0; i<=6; i++){
@@ -162,6 +181,7 @@ int main()
         printf("%10lf %13lf %17lf %12lf %18lf %11lf \n", avg21[i], avg22[i], avg221[i], avg23[i], avg231[i], avg24[i]);
     }
     
+    //Reopening the data files for q8
     fclose(data1);
     fclose(data2);
     fclose(data3);
@@ -175,6 +195,7 @@ int main()
         fgets(row, 100, data3);
     }
 
+    //Printing data to files similar to q5, but with all 3 data sets
     while (!feof(data1) || !feof(data2) || !feof(data3)){
         count++;
         fprintf(sup8, "%i ", count);
