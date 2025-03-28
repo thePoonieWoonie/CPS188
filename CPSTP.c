@@ -49,8 +49,13 @@ int main()
         fgets(row, 100, data1);
         fgets(row, 100, data2);
         fgets(row, 100, data3);
+        avg21[i] = 0;
+        avg22[i] = 0;
+        avg221[i] = 0;
+        avg23[i] = 0;
+        avg231[i] = 0;
+        avg24[i] = 0;
     }
-
     //Reading from 2021-22 data
     while (!feof(data1)){
         fgets(row, 100, data1);
@@ -65,8 +70,7 @@ int main()
             avg21[4] += oavg;
             avg21[5] += clavg;
             avg21[6] += total;
-        }
-        if (year == 2022){
+        }else if (year == 2022){
             count22++;
             avg22[0] += savg;
             avg22[1] += mavg;
@@ -92,8 +96,7 @@ int main()
             avg221[4] += oavg;
             avg221[5] += clavg;
             avg221[6] += total;
-        }
-        if (year == 2023){
+        }else if (year == 2023){
             count23++;
             avg23[0] += savg;
             avg23[1] += mavg;
@@ -130,8 +133,7 @@ int main()
             avg231[4] += oavg;
             avg231[5] += clavg;
             avg231[6] += total;
-        }
-        if (year == 2024){
+        }else if (year == 2024){
             count24++;
             avg24[0] += savg;
             avg24[1] += mavg;
